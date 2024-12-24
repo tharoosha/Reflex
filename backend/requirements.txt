@@ -1,0 +1,12 @@
+langgraph  
+langsmith  
+langchain_anthropic  
+
+# flask # For the chatbot's web interface
+sqlalchemy  # For database models
+requests  # For making API calls (if needed)
+jsonschema  # For validating JSON responses
+fastapi
+openai 
+mistralai
+uvicorn
