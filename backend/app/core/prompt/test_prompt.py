@@ -4,11 +4,11 @@ class ExamplePrompt:
     """
 
     @staticmethod
-    def construct(question: str, expected_answer: str, user_answer: str) -> str:
+    def construct(question: str) -> str:
         """
         Construct the prompt for the LLM.
         """
         return (
-            f"""test prompt
+            f"""{question}
             """
         )

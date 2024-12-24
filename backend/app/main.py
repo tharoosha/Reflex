@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from backend.app.controllers.test_controller import router as test_router
+# from controllers.test_controller import router as test_router
 import uvicorn
+from core.services.testing_chat import TestService  # Import TestService
 
 app = FastAPI(
     title="Reflex Backend",
@@ -8,11 +9,21 @@ app = FastAPI(
 )
 
 # Include the Socratic Tutor router
-app.include_router(test_router)
+# app.include_router(test_router)
+
+# Initialize the TestService
+test_service = TestService()
 
 @app.get("/")
 def root():
-    return {"message": "Welcome to the Socratic Tutor API!"}
+    # Test the TestService with a hardcoded question
+    test_message = "What is the capital of France?"
+    response = test_service.testing(test_message)
+    return {
+        "message": "Welcome to the RefleX Replenishment Service!",
+        "test_message": test_message,
+        "test_response": response
+    }
 
 # Run the app with Uvicorn and reload
 if __name__ == "__main__":

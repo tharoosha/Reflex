@@ -1,5 +1,5 @@
 import json
-from backend.app.core.prompt.test_prompt import ExamplePrompt
+from core.prompt.test_prompt import ExamplePrompt
 from core.utils.api_utils import APIUtils
 
 
@@ -14,13 +14,14 @@ class TestService:
         """
         self.api_utils = APIUtils(model_name=model_name, api_type=api_type)
 
-    def testing(self, question: str, expected_answer: str, user_answer: str):
+    def testing(self, question: str):
         """
         Check if the user's answer is correct compared to the expected answer.
         """
-        prompt = ExamplePrompt.construct(question, expected_answer, user_answer)
+        prompt = ExamplePrompt.construct(question)
         response = self.api_utils.generate_response(prompt)
-        return self.api_utils.parse_json_response(response)
+        print(response)
+        return response
 
 
 

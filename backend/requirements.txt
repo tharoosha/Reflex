@@ -10,3 +10,5 @@ fastapi
 openai 
 mistralai
 uvicorn
+python-dotenv
+pytest
