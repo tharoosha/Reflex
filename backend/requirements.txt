@@ -12,3 +12,4 @@ mistralai
 uvicorn
 python-dotenv
 pytest
+phidata

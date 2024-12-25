@@ -1,9 +1,9 @@
 # main.py
 
 import os
-from backend.app.core.Agent.NL_to_Json_extract_agent import NLPAgent
-from backend.app.core.llm_services.mistral_api import MistralAPI
-from backend.app.core.prompt.NL_to_Json_extract_agent_template import PROMPT_TEMPLATE
+from core.agent.nl_to_json_extract_agent import NLPAgent
+from core.llm_services.mistral_api import MistralAPI
+from core.prompt.nl_to_json_extract_agent_template import PROMPT_TEMPLATE
 
 
 class NLPProcessor:
@@ -17,12 +17,4 @@ class NLPProcessor:
         return self.nlp_agent.process_input(prompt)
 
 
-if __name__ == "__main__":
 
-    nlp_processor = NLPProcessor()
-
-    example_input = "Order 10 coffee pods when stock is below 10."
-
-    output = nlp_processor.process_input(example_input)
-    print("Final Output:")
-    print(output)
