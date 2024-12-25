@@ -21,3 +21,6 @@ class MistralAPI(LLMBase):
             messages=[{"role": "user", "content": prompt}]
         )
         return chat_response.choices[0].message.content
+
+    def getNameAndAPIKey(self):
+        return self.model, self.api_key

@@ -1,6 +1,6 @@
 import json
-from core.prompt.test_prompt import ExamplePrompt
-from core.utils.api_utils import APIUtils
+from backend.app.core.prompt.test_prompt import ExamplePrompt
+from backend.app.core.utils.api_utils import APIUtils
 
 
 class TestService:
