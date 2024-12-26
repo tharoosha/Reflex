@@ -1,7 +1,9 @@
+from test.db_test import test_database
 from core.logic.nl_to_json_extract_logic import NLPProcessor
 
 from fastapi import FastAPI
 # from controllers.test_controller import router as test_router
+# import test.db_test
 import uvicorn
 from core.services.testing_chat import TestService  # Import TestService
 
@@ -33,10 +35,16 @@ app = FastAPI(
 
 if __name__ == "__main__":
 
-    nlp_processor = NLPProcessor()
 
-    example_input = "i need to reorder my groceries every last week of the month "
+    # test.db_test.test_database()
+    test_database()
+    # import sys
+    # print(sys.path)
 
-    output = nlp_processor.process_input(example_input)
-    print("Final Output:")
-    print(output)
+    # nlp_processor = NLPProcessor()
+
+    # example_input = "i need to reorder my groceries every last week of the month "
+
+    # output = nlp_processor.process_input(example_input)
+    # print("Final Output:")
+    # print(output)
