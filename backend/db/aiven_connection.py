@@ -36,3 +36,19 @@ def get_connection():
     except pymysql.MySQLError as e:
         print(f"Error connecting to MySQL: {e}")
         raise
+
+
+
+def get_db_url():
+    """
+    Dynamically generates and returns the MySQL connection URL based on environment variables.
+    """
+    try:
+        
+
+        # Build the database URL
+        db_url = f"mysql+pymysql://{MYSQL_USERNAME}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+        return db_url
+    except Exception as e:
+        print(f"Error generating database URL: {e}")
+        raise

@@ -1,11 +1,16 @@
+from core.logic.sql_processor import SQLProcessor
 from test.db_test import test_database
-from core.logic.nl_to_json_extract_logic import NLPProcessor
+from core.logic.nlp_processor import NLPProcessor
 
 from fastapi import FastAPI
 # from controllers.test_controller import router as test_router
 # import test.db_test
 import uvicorn
 from core.services.testing_chat import TestService  # Import TestService
+from db.aiven_connection import get_connection
+
+from phi.agent import Agent
+from phi.tools.sql import SQLTools
 
 app = FastAPI(
     title="Reflex Backend",
@@ -37,14 +42,22 @@ if __name__ == "__main__":
 
 
     # test.db_test.test_database()
-    test_database()
+    # test_database()
     # import sys
     # print(sys.path)
 
-    # nlp_processor = NLPProcessor()
+    nlp_processor = NLPProcessor()
 
-    # example_input = "i need to reorder my groceries every last week of the month "
+    example_input = "i need to reorder my groceries every last week of the month "
 
-    # output = nlp_processor.process_input(example_input)
-    # print("Final Output:")
-    # print(output)
+    output = nlp_processor.process_input(example_input)
+    print("Final Output:")
+    print(output)
+
+    processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
+    response = processor.process_input("List the all the milk product variants with their prices")
+    print("Response without tools:", response)
+
+    # connection = get_connection()
+    # agent = Agent(tools=[SQLTools(db_engine=connection)])
+    # agent.print_response("List the all the milk product variants", markdown=True)

@@ -16,3 +16,5 @@ def execute_query(query, params=None):
             connection.commit()
     finally:
         connection.close()
+
+
