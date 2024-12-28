@@ -19,3 +19,5 @@ phidata
 
 pymysql
 cryptography
+
+streamlit

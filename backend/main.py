@@ -55,7 +55,7 @@ if __name__ == "__main__":
     print(output)
 
     processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
-    response = processor.process_input("List the all the milk product variants with their prices")
+    response = processor.process_input("List all the coffee products available in ascending order")
     print("Response without tools:", response)
 
     # connection = get_connection()
