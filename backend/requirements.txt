@@ -12,3 +12,12 @@ mistralai
 uvicorn
 python-dotenv
 pytest
+phidata
+# mysql-connector-python
+# SQLAlchemy
+
+
+pymysql
+cryptography
+
+streamlit
