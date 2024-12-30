@@ -1,5 +1,3 @@
-# agent.py
-
 from phi.agent import Agent
 from phi.model.mistral import MistralChat
 
