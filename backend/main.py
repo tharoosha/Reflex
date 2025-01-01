@@ -48,15 +48,20 @@ if __name__ == "__main__":
 
     nlp_processor = NLPProcessor()
 
-    example_input = "i need to reorder my groceries every last week of the month "
+    # example_input = "i need to reorder my groceries every last week of the month "
+
+    # output = nlp_processor.process_input(example_input)
+    # print("Final Output:")
+    # print(output)
+
+    example_input = "Order 10 coffee pods when stock is below 10. Order 5 milk when stock is equal 5."
 
     output = nlp_processor.process_input(example_input)
-    print("Final Output:")
     print(output)
 
-    processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
-    response = processor.process_input("List all the coffee products available in ascending order")
-    print("Response without tools:", response)
+    # processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
+    # response = processor.process_input("List all the product name available in the product table")
+    # print("Response without tools:", response)
 
     # connection = get_connection()
     # agent = Agent(tools=[SQLTools(db_engine=connection)])
