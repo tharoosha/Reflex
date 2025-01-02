@@ -1,0 +1,32 @@
+{
+    "user_preferences": [
+        {
+            "product": "Milk",
+            "preferences": {
+                "preferred_brands": [],
+                "dietary_restrictions": [
+                    "Vegetarian"
+                ],
+                "allergies": [
+                    "Lactose"
+                ],
+                "max_budget": 500
+            }
+        },
+        {
+            "product": "Coffee",
+            "preferences": {
+                "preferred_brands": [
+                    "Packer",
+                    "Imperial",
+                    "Green Harvest"
+                ],
+                "dietary_restrictions": [],
+                "allergies": [
+                    "Gluten"
+                ],
+                "max_budget": 500
+            }
+        }
+    ]
+}
