@@ -14,6 +14,9 @@ class MistralAPI(LLMBase):
         self.api_key = os.environ["MISTRAL_API_KEY"]
         self.client = Mistral(api_key=self.api_key)
         self.model = "mistral-large-latest"
+    
+    def __str__(self):
+        return self.model
 
     def generate_response(self, prompt: str) -> str:
         chat_response = self.client.chat.complete(
@@ -24,3 +27,6 @@ class MistralAPI(LLMBase):
 
     def getNameAndAPIKey(self):
         return self.model, self.api_key
+
+    def setModel(self, model_name: str):
+        self.model = model_name

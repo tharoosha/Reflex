@@ -21,3 +21,6 @@ pymysql
 cryptography
 
 streamlit
+
+crewai
+crewai-tools

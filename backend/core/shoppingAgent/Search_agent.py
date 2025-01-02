@@ -77,7 +77,6 @@ class DBAgent(SearchAgent):
         dislikes = self.escape_single_quotes(kwargs.get("dislikes", "None"))
         query = self.query.format(brand=brand, product=product, preferences=preferences, product_variation=product_variation,
                                   allergies=allergies, dislikes=dislikes)
-        print(query)
         response = None
         try:
             # Create a cursor object
