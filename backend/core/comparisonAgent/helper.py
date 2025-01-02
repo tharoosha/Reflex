@@ -1,4 +1,4 @@
-from backend.core.logic.sql_processor import SQLProcessor
+from core.logic.sql_processor import SQLProcessor
 from db.aiven_connection import get_connection
 
 def create_prompt_with_context(deals, constraints):
@@ -26,7 +26,6 @@ class DBAgent():
     
     def __init__(self):
         self.connection = get_connection()
-        self.model = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
     
     def search(self):
         response = None

@@ -1,5 +1,5 @@
 from crewai import LLM, Agent, Task, Crew, Process
-from backend.core.llm_services.mistral_api import MistralAPI
+from core.llm_services.mistral_api import MistralAPI
 from .helper import create_prompt_with_context
 
 class Deal_Finding_Agent:
@@ -23,7 +23,7 @@ class Deal_Finding_Agent:
             description=create_prompt_with_context(self.deals, self.user_constraints),
             expected_output=
             """
-                Return the product_id for the best deal. Don't output anything at all. Only the id number.
+                Return the product_id for the best deal.
                 ## Example Output format:
                     {
                         "product_id": 5,
