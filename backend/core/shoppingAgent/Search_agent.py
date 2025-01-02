@@ -52,11 +52,10 @@ class DBAgent(SearchAgent):
         p.contains,
         p.free_from,
         p.best_seller,
-        b.brand_name,
+        p.brand,
         MATCH(p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
         AGAINST('{product} {product_variation} {preferences} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode) AS relevance
     FROM Product p
-    JOIN Brand b ON p.brand_id = b.brand_id
     WHERE MATCH(p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
         AGAINST('{product} {product_variation} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode)
     ORDER BY relevance DESC;
