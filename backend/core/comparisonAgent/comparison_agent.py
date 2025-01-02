@@ -3,11 +3,11 @@ import re
 import json
 
 class Comparison_Agent:
-    def __init__(self, deals, user_constraints):
-        self.deal_agent = Deal_Finding_Agent(deals, user_constraints)
+    def __init__(self):
+        self.deal_agent = Deal_Finding_Agent()
 
-    def get_best_deal(self):
-        best_deal = self.deal_agent.build().kickoff().raw
+    def get_best_deal(self, deals, user_constraints):
+        best_deal = self.deal_agent.build(deals, user_constraints).kickoff().raw
         match = re.search(r'\{.*\}', best_deal, re.DOTALL)
         if match:
             json_content = match.group()

@@ -1,6 +1,4 @@
-from core.logic.sql_processor import SQLProcessor
-from .Shopping_Prompt import VanilaSearch
-from .Search_agent import QueryAgent, DBAgent
+from .Search_agent import DBAgent
 
 class Shopping_Agent():
     

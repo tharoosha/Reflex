@@ -1,7 +1,7 @@
 from core.logic.sql_processor import SQLProcessor
 from db.aiven_connection import get_connection
 
-def create_prompt_with_context(deals, constraints):
+def create_prompt_with_context(deals, constraints, quantity, quantity_type):
     constraints_text = "\n".join([f"- {key}: {value}" for key, value in constraints.items()])
     deals_text = "\n".join([f"{i}. {deal}" for i, deal in enumerate(deals)])
     discounts = DBAgent().search()
@@ -16,6 +16,8 @@ def create_prompt_with_context(deals, constraints):
 
     These are the details of the different possible discounts:
     {discounts_text}
+
+    Required Quantity: {quantity} {quantity_type}
     
     Find the best deal that matches these constraints.
     Return the best deal as a JSONObject. Don't output anything at all.
