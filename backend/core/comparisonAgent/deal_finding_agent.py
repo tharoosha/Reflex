@@ -43,7 +43,7 @@ class Deal_Finding_Agent:
                         "Quantity": 200,
                         "Quantity_type": "Grams",
                         "Price": 30,
-                        "reson_of_choice": "User prefers premium quality and is willing to pay more."
+                        "reason_of_choice": "User prefers premium quality and is willing to pay more."
                     }
             """,
             agent=self.deal_finder()

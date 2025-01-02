@@ -18,6 +18,7 @@ from core.comparisonAgent import Comparison_Agent
 
 from core.reflexLogger import ConsoleLogger
 
+from core.orderProcessor import OrderProcessor
 # app = FastAPI(
 #     title="Reflex Backend",
 #     version="1.0.0",
@@ -77,8 +78,8 @@ if __name__ == "__main__":
     # best_deal = comparision_agent.get_best_deal()
     # print(best_deal)
 
-    consoleLogger = ConsoleLogger()
-    consoleLogger.info("This is a test message")
+    order_processor = OrderProcessor()
+    order_processor.process_order("coffee", "None", 10, "pods")
 
     # processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
     # response = processor.process_input("List all the product name available in the product table")

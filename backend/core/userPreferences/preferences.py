@@ -3,7 +3,7 @@ from typing import Dict, Optional
 
 class UserPreferences:
     def __init__(self):
-        self.file_path = 'backend/core/userPreferences/preferences.json'
+        self.file_path = r'D:\Reflex\Reflex\backend\core\userPreferences\preferences.json'
         self.preferences = []
 
     def load_preferences(self) -> None:
