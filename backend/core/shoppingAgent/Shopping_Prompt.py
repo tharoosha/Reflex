@@ -63,11 +63,30 @@ class QueryGenerator(ShoppingPrompt):
 
     ##
     SQL Query Format: (search, omit)
-    SELECT product_id, product_name, product_variation,
-       MATCH(product_name, product_variation) AGAINST('search - omit' IN boolean mode) AS relevance
-        FROM Product
-            WHERE MATCH(product_name, product_variation) AGAINST('search - omit' IN boolean mode)
-            ORDER BY relevance DESC;
+    SELECT 
+        p.product_id, 
+        p.product_name, 
+        p.product_variation, 
+        p.description, 
+        p.attributes, 
+        p.ingrediants,
+        p.price,
+        p.product_rating,
+        p.MFD,
+        p.EXP,
+        p.Quantity,
+        p.Quantity_type,
+        p.contains,
+        p.free_from,
+        p.best_seller,
+        b.brand_name,
+        MATCH(p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
+        AGAINST('Coffee Dark Roasted free_from:dairy -Decaffeinated -ingredients:Sugar' IN boolean mode) AS relevance
+    FROM Product p
+    JOIN Brand b ON p.brand_id = b.brand_id
+    WHERE MATCH(p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
+        AGAINST('Coffee Dark Roasted free_from:dairy -Decaffeinated -ingredients:Sugar' IN boolean mode)
+    ORDER BY relevance DESC;
     
     ##
     Example Input :

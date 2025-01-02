@@ -12,10 +12,12 @@ from db.aiven_connection import get_connection
 from phi.agent import Agent
 from phi.tools.sql import SQLTools
 
-app = FastAPI(
-    title="Reflex Backend",
-    version="1.0.0",
-)
+from core.shoppingAgent import Shopping_Agent
+
+# app = FastAPI(
+#     title="Reflex Backend",
+#     version="1.0.0",
+# )
 
 # Include the Socratic Tutor router
 # app.include_router(test_router)
@@ -46,7 +48,7 @@ if __name__ == "__main__":
     # import sys
     # print(sys.path)
 
-    nlp_processor = NLPProcessor()
+    # nlp_processor = NLPProcessor()
 
     # example_input = "i need to reorder my groceries every last week of the month "
 
@@ -54,10 +56,14 @@ if __name__ == "__main__":
     # print("Final Output:")
     # print(output)
 
-    example_input = "Order 10 coffee pods when stock is below 10. Order 5 milk when stock is equal 5."
+    # example_input = "Order 10 coffee pods when stock is below 10. Order 5 milk when stock is equal 5."
 
-    output = nlp_processor.process_input(example_input)
-    print(output)
+    # output = nlp_processor.process_input(example_input)
+    # print(output)
+    shopping_Agent = Shopping_Agent()
+    results = shopping_Agent.search(product="coffee", allergies="vanilla", dislikes="sugar")
+    for result in results:
+        print(result)
 
     # processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
     # response = processor.process_input("List all the product name available in the product table")
