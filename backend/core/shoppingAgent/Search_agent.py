@@ -57,7 +57,7 @@ class DBAgent(SearchAgent):
         AGAINST('{brand} {product} {product_variation} {preferences} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode) AS relevance
     FROM Product p
     WHERE MATCH(p.brand, p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
-        AGAINST('{brand} {product} {product_variation} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode)
+        AGAINST('{brand} {product} {product_variation} {preferences} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode)
     ORDER BY relevance DESC;
 
     """
