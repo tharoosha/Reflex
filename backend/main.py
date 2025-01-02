@@ -1,3 +1,4 @@
+from core.comparisonAgent.helper import DBAgent
 from core.logic.sql_processor import SQLProcessor
 from test.db_test import test_database
 from core.logic.nlp_processor import NLPProcessor
@@ -13,6 +14,7 @@ from phi.agent import Agent
 from phi.tools.sql import SQLTools
 
 from core.shoppingAgent import Shopping_Agent
+from core.comparisonAgent import Comparison_Agent
 
 # app = FastAPI(
 #     title="Reflex Backend",
@@ -60,10 +62,18 @@ if __name__ == "__main__":
 
     # output = nlp_processor.process_input(example_input)
     # print(output)
+    user_constraints = {
+        "preferred_brands": ["Imperial", "Fresh Farms"],
+        "dietary_restrictions": ["Gluten Free"],
+        "max_budget": 50
+    }
+
     shopping_Agent = Shopping_Agent()
-    results = shopping_Agent.search(brand="Nature's Best", product="coffee", allergies="vanilla", dislikes="sugar")
-    for result in results:
-        print(result)
+    deals = shopping_Agent.search(product="coffee", allergies="vanilla", dislikes="sugar")
+
+    comparision_agent = Comparison_Agent(deals, user_constraints)
+    best_deal = comparision_agent.get_best_deal()
+    print(best_deal)
 
     # processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
     # response = processor.process_input("List all the product name available in the product table")
