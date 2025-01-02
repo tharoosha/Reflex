@@ -1,3 +1,6 @@
 backend/venv/
 backend/.env
 backend/ca.pem
+backend/.venv
+__pycache__/
+*/__pycache__/
