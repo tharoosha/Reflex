@@ -16,6 +16,8 @@ from phi.tools.sql import SQLTools
 from core.shoppingAgent import Shopping_Agent
 from core.comparisonAgent import Comparison_Agent
 
+from core.reflexLogger import ConsoleLogger
+
 # app = FastAPI(
 #     title="Reflex Backend",
 #     version="1.0.0",
@@ -62,18 +64,21 @@ if __name__ == "__main__":
 
     # output = nlp_processor.process_input(example_input)
     # print(output)
-    user_constraints = {
-        "preferred_brands": ["Imperial", "Fresh Farms"],
-        "dietary_restrictions": ["Gluten Free"],
-        "max_budget": 50
-    }
+    # user_constraints = {
+    #     "preferred_brands": ["Imperial", "Fresh Farms"],
+    #     "dietary_restrictions": ["Gluten Free"],
+    #     "max_budget": 50
+    # }
 
-    shopping_Agent = Shopping_Agent()
-    deals = shopping_Agent.search(product="coffee", allergies="vanilla", dislikes="sugar")
+    # shopping_Agent = Shopping_Agent()
+    # deals = shopping_Agent.search(product="coffee", allergies="vanilla", dislikes="sugar")
 
-    comparision_agent = Comparison_Agent(deals, user_constraints)
-    best_deal = comparision_agent.get_best_deal()
-    print(best_deal)
+    # comparision_agent = Comparison_Agent(deals, user_constraints)
+    # best_deal = comparision_agent.get_best_deal()
+    # print(best_deal)
+
+    consoleLogger = ConsoleLogger()
+    consoleLogger.info("This is a test message")
 
     # processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
     # response = processor.process_input("List all the product name available in the product table")

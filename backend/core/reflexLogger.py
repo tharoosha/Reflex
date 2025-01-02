@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import logging
+import inspect
 
 class ReflexLogger(ABC):
     
@@ -58,13 +59,20 @@ class ConsoleLogger(ReflexLogger):
     
     def __init__(self, next = None):
         super().__init__(next)
-        self.logger = logging.getLogger(__name__)
+        caller_module = inspect.stack()[1].frame.f_globals['__name__']
+        self.logger = logging.getLogger(caller_module)
         self.handler = logging.StreamHandler()
+        self.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        self.handler.setFormatter(self.formatter)
         self.logger.setLevel(logging.DEBUG)
         self.handler.setLevel(logging.DEBUG)
 
         if not self.logger.handlers:
             self.logger.addHandler(self.handler)
+    
+    def set_level(self, level):
+        self.logger.setLevel(level)
+        self.handler.setLevel(level)
     
     def _critical(self, message):
         self.logger.critical(message)
@@ -85,13 +93,20 @@ class FileLogger(ReflexLogger):
     
     def __init__(self, next = None, file_name = 'reflex.log'):
         super().__init__(next)
-        self.logger = logging.getLogger(__name__)
+        caller_module = inspect.stack()[1].frame.f_globals['__name__']
+        self.logger = logging.getLogger(caller_module)
         self.handler = logging.FileHandler(file_name)
+        self.formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        self.handler.setFormatter(self.formatter)
         self.logger.setLevel(logging.DEBUG)
         self.handler.setLevel(logging.DEBUG)
 
         if not self.logger.handlers:
             self.logger.addHandler(self.handler)
+    
+    def set_level(self, level):
+        self.logger.setLevel(level)
+        self.handler.setLevel(level)
     
     def _critical(self, message):
         self.logger.critical(message)
