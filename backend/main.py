@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # output = nlp_processor.process_input(example_input)
     # print(output)
     shopping_Agent = Shopping_Agent()
-    results = shopping_Agent.search(product="coffee", allergies="vanilla", dislikes="sugar")
+    results = shopping_Agent.search(brand="Nature's Best", product="coffee", allergies="vanilla", dislikes="sugar")
     for result in results:
         print(result)
 

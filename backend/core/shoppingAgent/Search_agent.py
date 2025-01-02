@@ -39,6 +39,7 @@ class DBAgent(SearchAgent):
     SELECT 
         p.product_id, 
         p.product_name, 
+        p.brand,
         p.product_variation, 
         p.description, 
         p.attributes, 
@@ -52,26 +53,29 @@ class DBAgent(SearchAgent):
         p.contains,
         p.free_from,
         p.best_seller,
-        p.brand,
-        MATCH(p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
-        AGAINST('{product} {product_variation} {preferences} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode) AS relevance
+        MATCH(p.brand, p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
+        AGAINST('{brand} {product} {product_variation} {preferences} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode) AS relevance
     FROM Product p
-    WHERE MATCH(p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
-        AGAINST('{product} {product_variation} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode)
+    WHERE MATCH(p.brand, p.product_name, p.product_variation, p.attributes, p.ingrediants, p.free_from) 
+        AGAINST('{brand} {product} {product_variation} free_from:{allergies} -{dislikes} -ingredients:{allergies}' IN boolean mode)
     ORDER BY relevance DESC;
 
     """
     def __init__(self):
         self.connection = get_connection()
         self.model = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
+
+    def escape_single_quotes(self, value):
+            return value.replace("'", "''") if value else value
     
     def search(self, **kwargs):
-        product = kwargs.get("product", "None")
-        preferences = kwargs.get("preferences", "None")
-        product_variation = kwargs.get("product_variation", "None")
-        allergies = kwargs.get("allergies", "None")
-        dislikes = kwargs.get("dislikes", "None")
-        query = self.query.format(product=product, preferences=preferences, product_variation=product_variation,
+        brand = self.escape_single_quotes(kwargs.get("brand", "None"))
+        product = self.escape_single_quotes(kwargs.get("product", "None"))
+        preferences = self.escape_single_quotes(kwargs.get("preferences", "None"))
+        product_variation = self.escape_single_quotes(kwargs.get("product_variation", "None"))
+        allergies = self.escape_single_quotes(kwargs.get("allergies", "None"))
+        dislikes = self.escape_single_quotes(kwargs.get("dislikes", "None"))
+        query = self.query.format(brand=brand, product=product, preferences=preferences, product_variation=product_variation,
                                   allergies=allergies, dislikes=dislikes)
         print(query)
         response = None
