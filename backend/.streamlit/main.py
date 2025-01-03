@@ -89,6 +89,7 @@ def iot_form():
         sensor_type = st.text_input("Sensor Type", placeholder="Enter Sensor Type")
         product = st.text_input("Product", placeholder="Enter Product Name")
         remaining = st.number_input("Remaining", min_value=0, step=1)
+        unit=st.text_input("Unit", placeholder="Enter Unit, eg='Liters, pods, etc.'")
         timestamp = st.date_input("Timestamp")
 
         # Submit button
@@ -98,8 +99,9 @@ def iot_form():
             payload = {
                 "deviceId": device_id,
                 "sensorType": sensor_type,
-                "product": product,
+                "product_type": product,
                 "remaining": remaining,
+                "unit": unit,
                 "timestamp": timestamp.isoformat(),
             }
 

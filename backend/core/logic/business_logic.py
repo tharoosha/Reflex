@@ -1,6 +1,11 @@
 import json
+
+# from core.orderProcessor.processor import OrderProcessor
 from db.local_db_temp import local_db_nl  # Import the local store
 
+def get_order_processor():
+    from core.orderProcessor.processor import OrderProcessor
+    return OrderProcessor()
 
 def append_to_local_db(prompt_json):
 
@@ -55,34 +60,38 @@ def order_comparing_function(IoT_Json):
         return
 
     # Extract the product details from IoT JSON
-    product_type = IoT_Json.get("product")
+    product = IoT_Json.get("product_type")
     remaining = IoT_Json.get("remaining")
+    unit=IoT_Json.get("unit")
 
-    print(f"Product Type: {product_type}")
+    print(f"Product : {product}")
     print(f"Remaining: {remaining}")
 
     # Check if the product exists in the customer's order list
-    if product_type in local_db_nl["order_list"][customer_id]:
-        order = local_db_nl["order_list"][customer_id][product_type]
+    if product in local_db_nl["order_list"][customer_id]:
+        order = local_db_nl["order_list"][customer_id][product]
         threshold = order.get("threshold")
+        order_quantity=order.get("quantity")
         if threshold and isinstance(threshold, str):
             operator, value = threshold[0], float(threshold[1:])
-            if operator == "<" and remaining < value:
-                print(f"Remaining quantity of {product_type} ({remaining}) is below the threshold ({threshold}).")
+            if (operator == "<" and remaining < value) or (operator == "=" and remaining <= value) or (operator == "≤" and remaining <= value):
+                order_processor = get_order_processor()
+                order_processor.process_order(product, "None", order_quantity, unit)            # if operator == "<" and remaining < value:
+            #     print(f"Remaining quantity of {product} ({remaining}) is below the threshold ({threshold}).")
             # elif operator == ">" and remaining > value:
-            #     print(f"Remaining quantity of {product_type} ({remaining}) is above the threshold ({threshold}).")
-            elif operator == "=" and remaining <= value:
-                print(f"Remaining quantity of {product_type} ({remaining}) matches the threshold ({threshold}).")
-            elif operator == "≤" and remaining <= value:
-                print(f"Remaining quantity of {product_type} ({remaining}) is at or below the threshold ({threshold}).")
+            #     print(f"Remaining quantity of {product} ({remaining}) is above the threshold ({threshold}).")
+            # elif operator == "=" and remaining <= value:
+            #     print(f"Remaining quantity of {product} ({remaining}) matches the threshold ({threshold}).")
+            # elif operator == "≤" and remaining <= value:
+            #     print(f"Remaining quantity of {product} ({remaining}) is at or below the threshold ({threshold}).")
             # elif operator == "≥" and remaining >= value:
-            #     print(f"Remaining quantity of {product_type} ({remaining}) is at or above the threshold ({threshold}).")
+            #     print(f"Remaining quantity of {product} ({remaining}) is at or above the threshold ({threshold}).")
     else:
         # If the product type is not found, check the remaining quantity
         if remaining == 0:
-            print(f"Product {product_type} is out of stock! Triggering an order.")
+            print(f"Product {product} is out of stock! Triggering an order.")
         else:
-            print(f"Product {product_type} not found in the database for customer {customer_id}.")
+            print(f"Product {product} not found in the database for customer {customer_id}.")
 
 
 

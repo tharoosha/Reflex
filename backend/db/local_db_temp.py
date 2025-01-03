@@ -11,28 +11,31 @@ user_preferences_store = {}
 local_db_nl = {
     "order_list": {
         "customer_123": {
-            "coffee pods": {
-                "product_type": "coffee pods",
-                "quantity": 5,
+            "coffee": {
+                "product_type": "coffee",
+                "quantity": 10,
                 "threshold": "<5",
                 "specific_time_period": None,
-                "re_order_after": None
+                "re_order_after": None,
+                "Unit": "pods"
             },
             "milk": {
                 "product_type": "milk",
-                "quantity": 3,
+                "quantity": 5,
                 "threshold": "<3",
                 "specific_time_period": None,
-                "re_order_after": None
+                "re_order_after": None,
+                "Unit": "liters"
             }
         },
         "customer_456": {
             "tea": {
                 "product_type": "tea",
-                "quantity": 20,
+                "quantity": 10,
                 "threshold": "<10",
                 "specific_time_period": None,
-                "re_order_after": None
+                "re_order_after": None,
+                "Unit": "bags"
             }
         }
     },
@@ -40,11 +43,11 @@ local_db_nl = {
         "customer_123": {
             "recipe_1": {
                 "recipe_name": "coffee latte",
-                "ingredients": ["coffee pods", "milk", "sugar"]
+                "ingredients": ["coffee", "milk", "sugar"]
             },
             "recipe_2": {
                 "recipe_name": "black coffee",
-                "ingredients": ["coffee pods", "water"]
+                "ingredients": ["coffee", "water"]
             }
         },
         "customer_456": {

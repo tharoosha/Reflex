@@ -14,13 +14,14 @@ Guidelines for each category’s JSON format:
 - **order_related**: Use this structure
     [
         {{
-            "product_type": "string",       # Name of the product (e.g., "coffee pods", "milk")
-            "quantity": integer/null,       # Quantity of the product (e.g., 10). Use null if not specified.
+            "product_type": "string",       # Name of the product (e.g., "coffee", "milk")
+            "quantity": integer/null,       # Quantity of the product that should be ordered (e.g., 10). Use null if not specified.
             "threshold": "string/null",     # Operator-based threshold (e.g., "<10", ">5", "=20", "≤5", "≥3"). 
                                             # Convert any textual expression like "below 10" to "<10". 
                                             # Use null if not specified.
             "specific_time_period": "string/null",  # Period for ordering (e.g., "weekly"). Use null if not specified.
             "re_order_after": "string/null"         # Time frame for reordering (e.g., "every 2 weeks"). Use null if not specified.
+            "Unit": "string/null"                   # Unit of the product (e.g., "Liters, pods, etc."). Use null if not specified.
         }}
     ]
 
