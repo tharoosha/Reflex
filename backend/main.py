@@ -1,8 +1,6 @@
 from core.logic.sql_processor import SQLProcessor
 from test.db_test import test_database
 from core.logic.nlp_processor import NLPProcessor
-from controllers.user_controller import router as user_router
-from controllers.iot_controller import router as iot_router
 
 from fastapi import FastAPI
 # from controllers.test_controller import router as test_router
@@ -14,6 +12,16 @@ from db.aiven_connection import get_connection
 from phi.agent import Agent
 from phi.tools.sql import SQLTools
 
+from core.shoppingAgent import Shopping_Agent
+from core.comparisonAgent import Comparison_Agent
+
+from core.reflexLogger import ConsoleLogger
+
+from core.orderProcessor import OrderProcessor
+# app = FastAPI(
+#     title="Reflex Backend",
+#     version="1.0.0",
+# )
 app = FastAPI(
     title="Reflex Backend",
     version="1.0.0",
@@ -39,8 +47,8 @@ app.include_router(iot_router, prefix="/api")
 #     }
 
 # Run the app with Uvicorn and reload
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+# if __name__ == "__main__":
+    # uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 
 if __name__ == "__main__":
 
