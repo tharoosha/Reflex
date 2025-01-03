@@ -13,10 +13,10 @@ async def iot_data_endpoint(request: Request):
         iot_data = IoTInput(**body)
 
         # Process the data
-        process_iot_data(iot_data.model_dump())
-
+        result = process_iot_data(iot_data.model_dump())
+        result_json={"message": result}
         # Return a JSON response
-        return {"message": "IoT data processed successfully"}
+        return result_json
     except Exception as e:
         print(f"Error processing IoT data: {e}")
         # Return an error response with JSON
