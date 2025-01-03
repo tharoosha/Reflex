@@ -1,6 +1,8 @@
 from core.logic.sql_processor import SQLProcessor
 from test.db_test import test_database
 from core.logic.nlp_processor import NLPProcessor
+from controllers.user_controller import router as user_router
+from controllers.iot_controller import router as iot_router
 
 from fastapi import FastAPI
 # from controllers.test_controller import router as test_router
@@ -16,6 +18,8 @@ app = FastAPI(
     title="Reflex Backend",
     version="1.0.0",
 )
+app.include_router(user_router, prefix="/api")
+app.include_router(iot_router, prefix="/api")
 
 # Include the Socratic Tutor router
 # app.include_router(test_router)
@@ -35,8 +39,8 @@ app = FastAPI(
 #     }
 
 # Run the app with Uvicorn and reload
-# if __name__ == "__main__":
-    # uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
 
 if __name__ == "__main__":
 

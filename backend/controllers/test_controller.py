@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from backend.app.schemas.testschema import TesModel
+from schemas.testschema import TesModel
 from core.logic.business_logic import testing_logic
 
 router = APIRouter()
