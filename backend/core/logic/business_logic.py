@@ -76,7 +76,9 @@ def order_comparing_function(IoT_Json):
             operator, value = threshold[0], float(threshold[1:])
             if (operator == "<" and remaining < value) or (operator == "=" and remaining <= value) or (operator == "≤" and remaining <= value):
                 order_processor = get_order_processor()
-                order_processor.process_order(product, "None", order_quantity, unit)            # if operator == "<" and remaining < value:
+                result=order_processor.process_order(product, "None", order_quantity, unit)
+                return result
+            # if operator == "<" and remaining < value:
             #     print(f"Remaining quantity of {product} ({remaining}) is below the threshold ({threshold}).")
             # elif operator == ">" and remaining > value:
             #     print(f"Remaining quantity of {product} ({remaining}) is above the threshold ({threshold}).")
@@ -90,6 +92,7 @@ def order_comparing_function(IoT_Json):
         # If the product type is not found, check the remaining quantity
         if remaining == 0:
             print(f"Product {product} is out of stock! Triggering an order.")
+
         else:
             print(f"Product {product} not found in the database for customer {customer_id}.")
 
