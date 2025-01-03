@@ -1,3 +1,4 @@
+from core.comparisonAgent.helper import DBAgent
 from core.logic.sql_processor import SQLProcessor
 from test.db_test import test_database
 from core.logic.nlp_processor import NLPProcessor
@@ -12,10 +13,16 @@ from db.aiven_connection import get_connection
 from phi.agent import Agent
 from phi.tools.sql import SQLTools
 
-app = FastAPI(
-    title="Reflex Backend",
-    version="1.0.0",
-)
+from core.shoppingAgent import Shopping_Agent
+from core.comparisonAgent import Comparison_Agent
+
+from core.reflexLogger import ConsoleLogger
+
+from core.orderProcessor import OrderProcessor
+# app = FastAPI(
+#     title="Reflex Backend",
+#     version="1.0.0",
+# )
 
 # Include the Socratic Tutor router
 # app.include_router(test_router)
@@ -46,7 +53,7 @@ if __name__ == "__main__":
     # import sys
     # print(sys.path)
 
-    nlp_processor = NLPProcessor()
+    # nlp_processor = NLPProcessor()
 
     # example_input = "i need to reorder my groceries every last week of the month "
 
@@ -54,10 +61,25 @@ if __name__ == "__main__":
     # print("Final Output:")
     # print(output)
 
-    example_input = "Order 10 coffee pods when stock is below 10. Order 5 milk when stock is equal 5."
+    # example_input = "Order 10 coffee pods when stock is below 10. Order 5 milk when stock is equal 5."
 
-    output = nlp_processor.process_input(example_input)
-    print(output)
+    # output = nlp_processor.process_input(example_input)
+    # print(output)
+    # user_constraints = {
+    #     "preferred_brands": ["Imperial", "Fresh Farms"],
+    #     "dietary_restrictions": ["Gluten Free"],
+    #     "max_budget": 50
+    # }
+
+    # shopping_Agent = Shopping_Agent()
+    # deals = shopping_Agent.search(product="coffee", allergies="vanilla", dislikes="sugar")
+
+    # comparision_agent = Comparison_Agent(deals, user_constraints)
+    # best_deal = comparision_agent.get_best_deal()
+    # print(best_deal)
+
+    order_processor = OrderProcessor()
+    order_processor.process_order("coffee", "None", 10, "pods")
 
     # processor = SQLProcessor(tool_names = ['SQLTool'], enable_tools=True)
     # response = processor.process_input("List all the product name available in the product table")
