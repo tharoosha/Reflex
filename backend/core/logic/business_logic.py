@@ -1,78 +1,102 @@
 import json
-import threading
-import time
+
+# from core.orderProcessor.processor import OrderProcessor
+from db.local_db_temp import local_db_nl  # Import the local store
+
+def get_order_processor():
+    from core.orderProcessor.processor import OrderProcessor
+    return OrderProcessor()
+
+def append_to_local_db(prompt_json):
+
+    # Hardcode customer ID for now
+    customer_id = "customer_1234"
+
+    # Ensure the customer ID exists in the local database
+    if customer_id not in local_db_nl["order_list"]:
+        local_db_nl["order_list"][customer_id] = {}
+    if customer_id not in local_db_nl["recipy_list"]:
+        local_db_nl["recipy_list"][customer_id] = {}
+    if customer_id not in local_db_nl["time_trigger_list"]:
+        local_db_nl["time_trigger_list"][customer_id] = {}
+
+    # Clean and parse the JSON input
+    prompt_json = str(prompt_json)
+    clean_json = prompt_json.strip("```json").strip("```").strip()
+    parsed_json = json.loads(clean_json)
+
+    # Update order_list in local_db for this customer
+    for order in parsed_json.get("order_related", []):
+        product_type = order["product_type"]
+        # Replace the product type if it already exists
+        local_db_nl["order_list"][customer_id][product_type] = order
+
+    # Update recipy_list in local_db for this customer
+    for recipy in parsed_json.get("recipy_related", []):
+        recipe_name = recipy.get("recipe_name", f"recipe_{len(local_db_nl['recipy_list'][customer_id]) + 1}")
+        local_db_nl["recipy_list"][customer_id][recipe_name] = recipy
+
+    # Update time_trigger_list in local_db for this customer
+    for trigger in parsed_json.get("time_trigger", []):
+        trigger_name = trigger.get("trigger_name", f"trigger_{len(local_db_nl['time_trigger_list'][customer_id]) + 1}")
+        local_db_nl["time_trigger_list"][customer_id][trigger_name] = trigger
+
+    print("Local DB updated successfully for customer:", customer_id)
+    print(json.dumps(local_db_nl, indent=4))
 
 
-class Analyzer:
-    def __init__(self):
-        self.order_list=[]
-        self.recipy_list=[]
-        self.time_trigger_list=[]
-        # self.running=False
-        # self.start_periodic_task()
-
-    def append_to_list(self,prompt_json):
-        prompt_json=str(prompt_json)
-        clean_json = prompt_json.strip("```json").strip("```").strip()
-        parsed_json = json.loads(clean_json)
-        self.order_list.extend(parsed_json.get("order_related", []))
-        self.recipy_list.extend(parsed_json.get("recipy_related", []))
-        self.time_trigger_list.extend(parsed_json.get("time_trigger", []))
-        print(self.order_list,self.recipy_list,self.time_trigger_list)
-
-    def order_comparing_function(self, IoT_Json):
-        # Parse the IoT_Json input
-        product_type = IoT_Json.get("product_type")
-        amount = IoT_Json.get("amount")
-
-        print(f"Product Type: {product_type}")
-        print(f"Amount: {amount}")
-
-        for order in self.order_list:
-            if order["product_type"] == product_type:
-                threshold = order.get("threshold")
-                if threshold and isinstance(threshold, str):
-                    operator, value = threshold[0], float(threshold[1:])
-                    if operator == "<" and amount < value:
-                        print(f"Amount of {product_type} ({amount}) is below the threshold ({threshold}).")
-                    elif operator == ">" and amount > value:
-                        print(f"Amount of {product_type} ({amount}) is above the threshold ({threshold}).")
-                    elif operator == "=" and amount == value:
-                        print(f"Amount of {product_type} ({amount}) matches the threshold ({threshold}).")
-                    elif operator == "≤" and amount <= value:
-                        print(f"Amount of {product_type} ({amount}) is at or below the threshold ({threshold}).")
-                    elif operator == "≥" and amount >= value:
-                        print(f"Amount of {product_type} ({amount}) is at or above the threshold ({threshold}).")
-                break
-
-    # def periodic_task(self):
-    #     print("Periodic task triggered!")
-    #
-    #     #logic
-    #     print("logic")
-    #
-    #     print(f"Order List: {self.order_list}")
-    #     print(f"Recipy List: {self.recipy_list}")
-    #     print(f"Time Trigger List: {self.time_trigger_list}")
-    #
-    # def start_periodic_task(self):
-    #     self.running = True
-    #
-    #     def run_task():
-    #         while self.running:
-    #             self.periodic_task()
-    #             time.sleep(10 )  # Wait for 10 minutes (600 seconds
-    #
-    #     thread = threading.Thread(target=run_task, daemon=True)
-    #     thread.start()
-    #
-    # def stop_periodic_task(self):
-    #     self.running = False
 
 
+
+
+def order_comparing_function(IoT_Json):
+
+    # Hardcode customer ID for now
+    customer_id = "customer_123"  # Replace with dynamic logic as needed
+
+    # Check if the customer exists in the local database
+    if customer_id not in local_db_nl["order_list"]:
+        print(f"Customer ID {customer_id} not found in the database.")
+        return
+
+    # Extract the product details from IoT JSON
+    product = IoT_Json.get("product_type")
+    remaining = IoT_Json.get("remaining")
+    unit=IoT_Json.get("unit")
+
+    print(f"Product : {product}")
+    print(f"Remaining: {remaining}")
+
+    # Check if the product exists in the customer's order list
+    if product in local_db_nl["order_list"][customer_id]:
+        order = local_db_nl["order_list"][customer_id][product]
+        threshold = order.get("threshold")
+        order_quantity=order.get("quantity")
+        if threshold and isinstance(threshold, str):
+            operator, value = threshold[0], float(threshold[1:])
+            if (operator == "<" and remaining < value) or (operator == "=" and remaining <= value) or (operator == "≤" and remaining <= value):
+                order_processor = get_order_processor()
+                order_processor.process_order(product, "None", order_quantity, unit)            # if operator == "<" and remaining < value:
+            #     print(f"Remaining quantity of {product} ({remaining}) is below the threshold ({threshold}).")
+            # elif operator == ">" and remaining > value:
+            #     print(f"Remaining quantity of {product} ({remaining}) is above the threshold ({threshold}).")
+            # elif operator == "=" and remaining <= value:
+            #     print(f"Remaining quantity of {product} ({remaining}) matches the threshold ({threshold}).")
+            # elif operator == "≤" and remaining <= value:
+            #     print(f"Remaining quantity of {product} ({remaining}) is at or below the threshold ({threshold}).")
+            # elif operator == "≥" and remaining >= value:
+            #     print(f"Remaining quantity of {product} ({remaining}) is at or above the threshold ({threshold}).")
+    else:
+        # If the product type is not found, check the remaining quantity
+        if remaining == 0:
+            print(f"Product {product} is out of stock! Triggering an order.")
+        else:
+            print(f"Product {product} not found in the database for customer {customer_id}.")
+
+
+
+# Example for testing
 if __name__ == "__main__":
-    analyzer = Analyzer()
-
     # JSON input with extra annotations
     raw_json = """```json
     {
@@ -96,29 +120,37 @@ if __name__ == "__main__":
       "time_trigger": []
     }
     ```"""
-    analyzer.append_to_list(raw_json)
+    append_to_local_db(raw_json)
 
     # Example IoT JSON inputs to test
     iot_json_1 = {
-        "product_type": "coffee pods",
-        "amount": 9
+        "product": "coffee pods",
+        "remaining": 9
     }
 
     iot_json_2 = {
-        "product_type": "milk",
-        "amount": 6
+        "product": "milk",
+        "remaining": 6
     }
 
     iot_json_3 = {
-        "product_type": "milk",
-        "amount": 4
+        "product": "milk",
+        "remaining": 4
+    }
+
+    iot_json_4 = {
+        "product": "tea",
+        "remaining": 0
     }
 
     print("\nTesting IoT JSON 1:")
-    analyzer.order_comparing_function(iot_json_1)
+    order_comparing_function(iot_json_1)
 
     print("\nTesting IoT JSON 2:")
-    analyzer.order_comparing_function(iot_json_2)
+    order_comparing_function(iot_json_2)
 
     print("\nTesting IoT JSON 3:")
-    analyzer.order_comparing_function(iot_json_3)
+    order_comparing_function(iot_json_3)
+
+    print("\nTesting IoT JSON 4:")
+    order_comparing_function(iot_json_4)

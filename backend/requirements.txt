@@ -6,20 +6,27 @@ langchain_anthropic
 sqlalchemy  # For database models
 requests  # For making API calls (if needed)
 jsonschema  # For validating JSON responses
-fastapi
-openai 
-mistralai
-uvicorn
-python-dotenv
-pytest
+fastapi~=0.115.6
+openai~=1.58.1
+mistralai~=1.2.5
+uvicorn~=0.34.0
+python-dotenv~=1.0.1
+pytest~=8.3.4
 phidata
 # mysql-connector-python
 # SQLAlchemy
 
+# For the chatbot's web interface
+pandas
+numpy
+requests
 
-pymysql
+pymysql~=1.1.1
 cryptography
 
-streamlit
+streamlit~=1.41.1
+PyYAML~=6.0.2
+pydantic~=2.10.4
+
 
 crewai
