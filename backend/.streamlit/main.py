@@ -165,16 +165,6 @@ def handle_response(response):
         response_json = response.json()
         if "message" in response_json:
             st.success(response_json["message"])
-
-            # Properly format and display details line by line
-            details = response_json.get("details", {})
-            if isinstance(details, dict):
-                # st.write("### Product Details:")
-                for key, value in details.items():
-                    st.write(f"- **{key}:** {value}")
-            else:
-                st.warning("No detailed information available.")
-
         elif "error" in response_json:
             st.error(response_json["error"])
         else:
