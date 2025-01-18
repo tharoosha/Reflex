@@ -4,7 +4,7 @@
 import streamlit as st
 
 
-fav_icon = "backend/assets/brand/reflex_logo.jpeg"
+fav_icon = "assets/brand/reflex_logo.jpeg"
 st.set_page_config(layout="wide", page_title="Reflex")
 
 st.html("""
@@ -15,8 +15,8 @@ st.html("""
   </style>
         """)
 
-sidear_logo = "backend/assets/brand/reflex_logo.jpeg"
-main_body_logo = "backend/assets/brand/reflex_logo.jpeg"
+sidear_logo = "assets/brand/reflex_logo.jpeg"
+main_body_logo = "assets/brand/reflex_logo.jpeg"
 
 st.logo(sidear_logo, icon_image=main_body_logo, size="large")
 

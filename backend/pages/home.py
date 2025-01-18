@@ -24,13 +24,13 @@ def home_page():
     col1, col2 = st.columns([1, 1], gap="small")
 
     with col1:
-        st.image("backend/assets/devices/coffee_machine.png", use_container_width=True)
+        st.image("assets/devices/coffee_machine.png", use_container_width=True)
         if st.button("Register Coffee Machine"):
             st.session_state["selected_device"] = "coffee_machine"
             st.rerun()
 
     with col2:
-        st.image("backend/assets/devices/smart_fridge.png", use_container_width=True)
+        st.image("assets/devices/smart_fridge.png", use_container_width=True)
         if st.button("Register Smart Fridge"):
             st.session_state["selected_device"] = "smart_fridge"
             st.rerun()
@@ -43,13 +43,13 @@ def coffee_machine():
     col1, col2 = st.columns([1, 1], gap="small")
 
     with col1:
-        st.image("backend/assets/devices/coffee.png", use_container_width=True)
+        st.image("assets/devices/coffee.png", use_container_width=True)
         if st.button("Customize your coffee"):
             st.session_state["selected_device"] = "customize_coffee"
             st.rerun()
 
     with col2:
-        st.image("backend/assets/devices/milk.png", use_container_width=True)
+        st.image("assets/devices/milk.png", use_container_width=True)
         if st.button("Customize your milk"):
             st.session_state["selected_device"] = "customize_milk"
             st.rerun()
