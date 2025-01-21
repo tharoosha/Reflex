@@ -2,8 +2,8 @@
 headless = true
 port = 8501
 
-[theme]
-primaryColor = "#F39C12"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F0F0F5"
-textColor = "#000000"
+#[theme]
+#primaryColor = "#F39C12"
+#backgroundColor = "#FFFFFF"
+#secondaryBackgroundColor = "#F0F0F5"
+#textColor = "#000000"
