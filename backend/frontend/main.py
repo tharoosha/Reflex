@@ -6,6 +6,12 @@ from datetime import datetime
 IOT_API_URL = "http://localhost:8000/api/iot/data"  # Replace with your actual endpoint
 USER_API_URL = "http://localhost:8000/api/user/nl-process"  # Replace with your actual endpoint
 PREFERENCES_API_URL = "http://localhost:8000/api/user/preferences"  # Replace with your actual endpoint
+NEGOTIATION_API_URL = "http://localhost:8000/api/negotiation"  # Replace with your actual endpoint
+
+# Initialize session state for storing conversation history
+if "messages" not in st.session_state:
+    st.session_state.messages = []  # List to store {"user": message, "bot": message} pairs
+
 
 def add_page_custom_styling():
     st.markdown(
@@ -144,6 +150,10 @@ def main():
 
     st.title("API Input Application")
 
+    # Start button to show chat interface
+    if "show_chat" not in st.session_state:
+        st.session_state.show_chat = False
+
     # Display IoT Form
     st.subheader("IoT Data Submission")
     iot_form()
@@ -155,6 +165,13 @@ def main():
     # Display User Preferences Form
     st.subheader("Set User Preferences")
     user_preferences_form()
+
+    # Add negotiation section
+    st.subheader("Negotiation")
+    if st.button("Start Chat"):
+        st.session_state.show_chat = True
+    if st.session_state.show_chat:
+        negotiation_section()
 
 
 def iot_form():
@@ -234,6 +251,43 @@ def user_preferences_form():
             except Exception as e:
                 st.error(f"Failed to set user preferences: {e}")
 
+def negotiation_section():
+    for message in st.session_state.messages:
+        if "user" in message:
+            st.markdown(f"<div style='text-align: right; color: blue;'><strong>You:</strong> {message['user']}</div>", unsafe_allow_html=True)
+        if "bot" in message:
+            st.markdown(f"<div style='text-align: left; color: green;'><strong>Bot:</strong> {message['bot']}</div>", unsafe_allow_html=True)
+
+    with st.form(key="negotiation_form"):
+        user_message = st.text_area("Your Message", placeholder="Enter your message to the bot")
+        submit = st.form_submit_button("Send Message")
+        
+        if submit and user_message.strip():
+            st.session_state.messages.append({"user": user_message})\
+
+            payload = {"message": user_message}
+
+            try:
+                response = requests.post(NEGOTIATION_API_URL, json=payload)
+                handle_negotiation_response(response)
+            except Exception as e:
+                st.error(f"Failed to send message: {e}")
+
+def handle_negotiation_response(response):
+    if response.status_code == 200:
+        response_json = response.json()
+        if "bot_response" in response_json:
+            st.session_state.messages.append({"bot": response_json["bot_response"]})
+            st.rerun()
+        else:
+            st.warning("Unexpected response format!")
+    else:
+        try:
+            response_json = response.json()
+            if "error" in response_json:
+                st.error(response_json["error"])
+        except:
+            st.error("Invalid JSON response from the server.")
 
 def handle_response(response):
     if response.status_code == 200:
