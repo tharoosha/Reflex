@@ -6,12 +6,12 @@ from datetime import datetime
 IOT_API_URL = "http://localhost:8000/api/iot/data"  # Replace with your actual endpoint
 USER_API_URL = "http://localhost:8000/api/user/nl-process"  # Replace with your actual endpoint
 PREFERENCES_API_URL = "http://localhost:8000/api/user/preferences"  # Replace with your actual endpoint
-NEGOTIATION_API_URL = "http://localhost:8000/api/negotiation"  # Replace with your actual endpoint
+NEGOTIATION_START_API_URL = "http://localhost:8000/api/negotiation/start"  
+NEGOTIATION_CONTINUE_API_URL = "http://localhost:8000/api/negotiation/continue"  
 
 # Initialize session state for storing conversation history
 if "messages" not in st.session_state:
     st.session_state.messages = []  # List to store {"user": message, "bot": message} pairs
-
 
 def add_page_custom_styling():
     st.markdown(
@@ -170,6 +170,13 @@ def main():
     st.subheader("Negotiation")
     if st.button("Start Chat"):
         st.session_state.show_chat = True
+        # try:
+        #     response = requests.post(NEGOTIATION_START_API_URL, json={"message": "start"})
+        #     handle_negotiation_response(response)
+        # except Exception as e:
+        #     st.error(f"Failed to send message: {e}")
+        
+
     if st.session_state.show_chat:
         negotiation_section()
 
@@ -263,12 +270,12 @@ def negotiation_section():
         submit = st.form_submit_button("Send Message")
         
         if submit and user_message.strip():
-            st.session_state.messages.append({"user": user_message})\
+            st.session_state.messages.append({"user": user_message})
 
             payload = {"message": user_message}
 
             try:
-                response = requests.post(NEGOTIATION_API_URL, json=payload)
+                response = requests.post(NEGOTIATION_CONTINUE_API_URL, json=payload)
                 handle_negotiation_response(response)
             except Exception as e:
                 st.error(f"Failed to send message: {e}")

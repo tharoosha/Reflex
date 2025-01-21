@@ -78,6 +78,18 @@ def order_comparing_function(IoT_Json):
                 order_processor = get_order_processor()
                 result=order_processor.process_order(product, "None", order_quantity, unit)
 
+                negotiation_details = {
+                    "product_name": result['product_name'],
+                    "brand": result['brand'],
+                    "Price": result['Price'],
+                    "max_budget": result['max_budget'],
+                    "order_quantity": order_quantity,
+                    "unit": unit
+                }
+
+                with open("../negotiation_details.json", "w") as json_file:
+                    json.dump(negotiation_details, json_file, indent=4)
+
     else:
         # If the product type is not found, check the remaining quantity
         if remaining == 0:

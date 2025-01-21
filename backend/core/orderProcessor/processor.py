@@ -31,7 +31,7 @@ class OrderProcessor:
         self.logger.info(deals_msg)
         
         results = self.comparisonAgent.get_best_deal(deals, user_constraints, quantity, quantity_type)
-        print(results)
+        results['max_budget'] = user_constraints['max_budget']
         result_product_id = results['product_id']
         result_reason = results['reason_of_choice']
         results_msg = "Best deal found for product: " + product_name + "&"+ product_variation + " is: " + str(result_product_id) + " with reason: " + result_reason

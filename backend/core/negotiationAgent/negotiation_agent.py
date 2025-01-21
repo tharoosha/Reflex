@@ -32,10 +32,10 @@ class Negotiation_Agent:
             process=Process.sequential
         )
 
-    def start_conversation(self, deals, user_constraints, quantity, quantity_type):
+    def start_conversation(self, product_name, brand, Price, max_budget, order_quantity, unit):
         self.conversation_history.append({
-            "role": "system",
-            "content": create_negotiation_prompt(deals, user_constraints, quantity, quantity_type)
+            "role": "Negotiator as the buyer",
+            "content": create_negotiation_prompt(product_name, brand, Price, max_budget, order_quantity, unit)
         })
         return self.get_response()
 
@@ -49,7 +49,7 @@ class Negotiation_Agent:
     def get_response(self):
         task = Task(
             description="\n".join([f"{msg['role']}: {msg['content']}" for msg in self.conversation_history]),
-            expected_output="Return the chatbot's response as for negotiation as the buyer. Also, provide the explanation for agent's action.",
+            expected_output="Return the chatbot's response as for negotiation as the buyer. Also, provide the explanation for agent's action. Provide that as a JSON. Fields should be Response and Explanation.",
             agent=self.negotiator()
         )
         crew = Crew(
