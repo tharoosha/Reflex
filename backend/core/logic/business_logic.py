@@ -77,7 +77,8 @@ def order_comparing_function(IoT_Json):
             if (operator == "<" and remaining < value) or (operator == "=" and remaining <= value) or (operator == "≤" and remaining <= value):
                 order_processor = get_order_processor()
                 result=order_processor.process_order(product, "None", order_quantity, unit)
-
+                print(result)
+                return result
     else:
         # If the product type is not found, check the remaining quantity
         if remaining == 0:

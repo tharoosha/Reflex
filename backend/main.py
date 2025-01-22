@@ -18,17 +18,9 @@ app.include_router(message_router, prefix="/api")  # Uncommented to include this
 
 # Start ngrok tunnel and run the app
 if __name__ == "__main__":
-    # Set the path to the ngrok executable
-    conf.get_default().ngrok_path = r"M:\SLIIT\Reflex\backend\ngrok.exe"
-
-    # Start the ngrok tunnel
-    public_url = ngrok.connect(8000)
-    print(f"ngrok public URL: {public_url}")
-
     try:
         # Run the app with Uvicorn
         uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
     except KeyboardInterrupt:
         print("Shutting down ngrok tunnel...")
-    finally:
-        ngrok.kill()
+
