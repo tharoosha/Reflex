@@ -148,11 +148,15 @@ def main():
     # Add custom styling
     add_page_custom_styling()
 
-    st.title("API Input Application")
+    st.title("Welcome to REFLEX")
 
     # Start button to show chat interface
     if "show_chat" not in st.session_state:
         st.session_state.show_chat = False
+
+    # Display User Preferences Form
+    st.subheader("Set User Preferences")
+    user_preferences_form()
 
     # Display IoT Form
     st.subheader("IoT Data Submission")
@@ -162,22 +166,15 @@ def main():
     st.subheader("User NLP Processing")
     user_nlp_form()
 
-    # Display User Preferences Form
-    st.subheader("Set User Preferences")
-    user_preferences_form()
+    
 
     # Add negotiation section
     st.subheader("Negotiation")
     if st.button("Start Chat"):
-        st.session_state.show_chat = True
-        # try:
-        #     response = requests.post(NEGOTIATION_START_API_URL, json={"message": "start"})
-        #     handle_negotiation_response(response)
-        # except Exception as e:
-        #     st.error(f"Failed to send message: {e}")
-        
+        st.session_state.show_chat = True        
 
     if st.session_state.show_chat:
+        start_section()
         negotiation_section()
 
 
@@ -258,8 +255,47 @@ def user_preferences_form():
             except Exception as e:
                 st.error(f"Failed to set user preferences: {e}")
 
+def start_section():
+    # for message in st.session_state.messages:
+    #     print("/////////////////////////////// inside start////////////////", message)
+    #     if "user" in message:
+    #         st.markdown(f"<div style='text-align: right; color: blue;'><strong>You:</strong> {message['user']}</div>", unsafe_allow_html=True)
+    #     if "bot" in message:
+    #         st.markdown(f"<div style='text-align: left; color: green;'><strong>Bot:</strong> {message['bot']}</div>", unsafe_allow_html=True)
+
+
+    # st.session_state.messages.append({"user": "Start"})
+
+    payload = {"message": "Start"}  
+
+    try:
+        response = requests.post(NEGOTIATION_START_API_URL, json=payload)
+        handle_negotiation_start_response(response)
+    except Exception as e:
+        st.error(f"Failed to send message: {e}")
+
+def handle_negotiation_start_response(response):
+    print("-------------------------------------------------------------")
+    if response.status_code == 200:
+        response_json = response.json()
+        print("-----------------", response_json)
+        if "bot_response" in response_json:
+            # st.session_state.messages.append({"bot": response_json["bot_response"]})
+            st.markdown(f"<div style='text-align: left; color: green;'><strong>Bot:</strong> {response_json["bot_response"]}</div>", unsafe_allow_html=True)
+
+        else:
+            st.warning("Unexpected response format!")
+    else:
+        try:
+            response_json = response.json()
+            if "error" in response_json:
+                st.error(response_json["error"])
+        except:
+            st.error("Invalid JSON response from the server.")
+
 def negotiation_section():
     for message in st.session_state.messages:
+        print("=======================inside negotiation////////////////", message)
         if "user" in message:
             st.markdown(f"<div style='text-align: right; color: blue;'><strong>You:</strong> {message['user']}</div>", unsafe_allow_html=True)
         if "bot" in message:
@@ -283,6 +319,7 @@ def negotiation_section():
 def handle_negotiation_response(response):
     if response.status_code == 200:
         response_json = response.json()
+        print("-----------------", response_json)
         if "bot_response" in response_json:
             st.session_state.messages.append({"bot": response_json["bot_response"]})
             st.rerun()

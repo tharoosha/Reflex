@@ -1,0 +1,8 @@
+{
+    "product_name": "Coffee",
+    "brand": "Packer",
+    "Price": 49.98,
+    "max_budget": 50,
+    "order_quantity": 1000,
+    "unit": "Grams"
+}
