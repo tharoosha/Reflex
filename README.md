@@ -16,6 +16,7 @@ Reflex is an innovative platform designed to revolutionize the e-commerce experi
 - **IoT Integration**: Leverages IoT devices to monitor usage and trigger automatic replenishment.
 
 ## Solution Architecture
+![Solution Architecture](Architecture_Diagram/Solution_Overview.png)
 
 ### Data Flow Diagram
 ![Data Flow Diagram](Solution%20Overview%20Lucidchart%20(10).png)
