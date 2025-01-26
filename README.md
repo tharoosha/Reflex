@@ -1,6 +1,7 @@
 # Reflex - Next-Generation E-Commerce Machine Customer Platform
 ![Logo](Architecture_Diagram/logo.png)
 
+
 ## Overview
 
 Reflex is an innovative platform designed to revolutionize the e-commerce experience by leveraging the concept of **Machine Customers**. These are autonomous AI agents capable of shopping on behalf of users, making data-driven purchasing decisions, and optimizing the entire shopping process. Reflex integrates advanced technologies, including Generative AI, IoT, and machine learning, to create a seamless, personalized, and efficient shopping experience.
