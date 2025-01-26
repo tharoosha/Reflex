@@ -1,4 +1,5 @@
 # Reflex - Next-Generation E-Commerce Machine Customer Platform
+![Logo](Architecture_Diagram/logo.png)
 
 ## Overview
 
@@ -19,10 +20,10 @@ Reflex is an innovative platform designed to revolutionize the e-commerce experi
 ![Solution Architecture](Architecture_Diagram/Solution_Overview.png)
 
 ### Data Flow Diagram
-![Data Flow Diagram](Solution%20Overview%20Lucidchart%20(10).png)
+![Data Flow Diagram](Architecture_Diagram/Data_flow_diagram.png)
 
 ### Use Case Diagram
-![Use Case Diagram](Solution%20Overview%20Lucidchart%20(9).png)
+![Use Case Diagram](Architecture_Diagram/Usecase_diagram.png)
 
 ## How It Works
 
@@ -47,8 +48,8 @@ Reflex is an innovative platform designed to revolutionize the e-commerce experi
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/reflex-platform.git
-   cd reflex-platform
+   git clone https://github.com/tharoosha/Reflex.git
+   cd Reflex
    ```
 
 2. Set up the environment:
@@ -79,11 +80,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Reference Material: [Machine Customers Will Decide Who Gets Their Trillion-Dollar Business—Is It You?](https://example.com)
+- Reference Material: [Machine Customers Will Decide Who Gets Their Trillion-Dollar Business—Is It You?](https://www.gartner.com/en/articles/machine-customers-will-decide-who-gets-their-trillion-dollar-business-is-it-you)
 
 ## Contact
 
-For any inquiries, please contact us at [your-email@example.com](mailto:your-email@example.com).
+For any inquiries, please contact us at [tharooshavihidun@gmail.com](mailto:tharooshavihidun@gmail.com).
 
 ---
 
